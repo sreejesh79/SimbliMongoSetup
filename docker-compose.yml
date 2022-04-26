@@ -1,0 +1,26 @@
+version: '3.8'
+networks: 
+  bridge:
+services:
+  db:
+    image: mongo:4.4
+    container_name: SimbliMongoDB
+    hostname: simblimongo
+    network_mode: bridge
+    restart: always
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=mongodb
+      - MONGO_INITDB_ROOT_PASSWORD=mongodb
+      - MONGO_INITDB_DATABASE=simblimongo
+      - MONGODB_DATA_DIR=/data/db
+      - MONDODB_LOG_DIR=/dev/null
+    ports:
+      - '27017:27017'
+    volumes:
+      - ./mongo-entrypoint:/docker-entrypoint-initdb.d 
+      - mongodb:/data/db
+      - mongoconfig:/data/configdb
+
+volumes:
+  mongodb:
+  mongoconfig:
